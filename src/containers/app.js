@@ -11,12 +11,14 @@ import { connect } from 'react-redux'
 import LoadingContainer from 'react-native-loading-container';
 
 var CompaniesIndex = require('../components/companies_index');
+var CompaniesShow = require('../components/companies_show');
 var Welcome = require('./welcome').default;
 
 import { loadCurrentUser } from '../actions/index';
 
 var ROUTES = {
   companiesIndex: CompaniesIndex,
+  companiesShow: CompaniesShow,
   welcome: Welcome
 }
 

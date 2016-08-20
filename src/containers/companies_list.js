@@ -18,11 +18,16 @@ class CompaniesList extends Component {
     super(props);
 
     this.renderRow = this.renderRow.bind(this);
+    this.showCompany = this.showCompany.bind(this);
+  }
+
+  showCompany(company) {
+    this.props.navigator.push({ name: 'companiesShow', data: company });
   }
 
   renderRow(company) {
     return(
-      <TouchableHighlight onPress={() => this.props.selectCompany(company)}>
+      <TouchableHighlight onPress={() => this.showCompany(company)}>
         <View style={styles.row}>
           <Text style={styles.text}>{company.name}</Text>
           <Text style={styles.text}>{company.price}</Text>
@@ -47,13 +52,8 @@ class CompaniesList extends Component {
 
 function mapStateToProps(state) {
   return {
-    companies: state.companies,
-    currentCompany: state.currentCompany
+    companies: state.companies
   };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectCompany: selectCompany }, dispatch);
 }
 
 var styles = StyleSheet.create({
@@ -71,4 +71,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompaniesList);
+export default connect(mapStateToProps)(CompaniesList);
