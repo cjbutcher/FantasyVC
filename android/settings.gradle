@@ -1,0 +1,3 @@
+rootProject.name = 'FantasyVC'
+
+include ':app'
