@@ -32,7 +32,6 @@ class CompaniesList extends Component {
   }
 
   render() {
-    console.log(this.props.currentCompany.name);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={styles.container}>

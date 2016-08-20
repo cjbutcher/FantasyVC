@@ -1,46 +1,19 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Navigator,
-  StyleSheet
-} from 'react-native';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import React, { Component } from 'react';
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux';
+import ReduxPromise from 'redux-promise';
 
-var CompaniesIndex = require('./components/companies_index');
+import App from './containers/app';
 
 const rootReducer = require('./reducers/index').default;
-const store = createStore(rootReducer)
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
-var ROUTES = {
-  companiesIndex: CompaniesIndex
-}
-
-module.exports = class CompaniesIndex extends Component {
-  constructor() {
-    super();
-  }
-
-  renderScene(route, navigator) {
-    var Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} />;
-  }
-
+export default class Main extends Component {
   render() {
-    return(
-      <Provider store={store}>
-        <Navigator style={styles.container}
-                   initialRoute={{name: 'companiesIndex'}}
-                   renderScene={this.renderScene}
-                   configureScene={ () => {return Navigator.SceneConfigs.FloatFromBottom;} } />
+    return (
+      <Provider store={createStoreWithMiddleware(rootReducer)}>
+        <App />
       </Provider>
-    )
+    );
   }
-};
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-})
+}
