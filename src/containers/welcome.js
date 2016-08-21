@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createGuestUser } from '../actions/index';
@@ -21,7 +22,7 @@ class Welcome extends Component {
 
   continueAsGuest() {
     this.props.createGuestUser().then(() => {
-      this.props.navigator.resetTo({ name: 'companiesIndex' });
+      return Actions.companiesIndex();
     });
   }
 

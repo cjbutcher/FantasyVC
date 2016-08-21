@@ -2,9 +2,9 @@ import React, {
   Component
 } from 'react';
 import {
-  Navigator,
   StyleSheet
 } from 'react-native';
+import { Router, Scene } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -14,13 +14,9 @@ var CompaniesIndex = require('../components/companies_index');
 var CompaniesShow = require('../components/companies_show');
 var Welcome = require('./welcome').default;
 
-import { loadCurrentUser } from '../actions/index';
+const RouterWithRedux = connect()(Router);
 
-var ROUTES = {
-  companiesIndex: CompaniesIndex,
-  companiesShow: CompaniesShow,
-  welcome: Welcome
-}
+import { loadCurrentUser } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -31,23 +27,19 @@ class App extends Component {
 
     this._loadInitialDataAsync = this._loadInitialDataAsync.bind(this);
     this._onReadyAsync = this._onReadyAsync.bind(this);
-    this.renderNavigator = this.renderNavigator.bind(this);
-  }
-
-  renderScene(route, navigator) {
-    var Component = ROUTES[route.name];
-    return <Component route={route} navigator={navigator} />;
+    this.renderRouter = this.renderRouter.bind(this);
   }
 
   async _loadInitialDataAsync() {
     var route;
     await this.props.loadCurrentUser();
     if (this.props.currentUser) {
+      console.log('the current user is: ', this.props.currentUser);
       route = 'companiesIndex'
     } else {
       route = 'welcome'
     }
-    return { name: route }
+    return route
   }
 
   async _onReadyAsync(route) {
@@ -58,15 +50,22 @@ class App extends Component {
     });
   }
 
-  renderNavigator() {
+  renderRouter() {
     if (!this.state.initialRoute) {
       return;
     }
     return (
-      <Navigator style={styles.container}
-                 initialRoute={this.state.initialRoute}
-                 renderScene={this.renderScene}
-                 configureScene={ () => {return Navigator.SceneConfigs.FloatFromBottom;} } />
+      <RouterWithRedux>
+        <Scene key="root">
+          <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
+          <Scene key="companiesIndex" component={CompaniesIndex} title="Companies#Index" initial={this.state.initialRoute == 'companiesIndex'} />
+          <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
+        </Scene>
+      </RouterWithRedux>
+      // <Navigator style={styles.container}
+      //            initialRoute={this.state.initialRoute}
+      //            renderScene={this.renderScene}
+      //            configureScene={ () => {return Navigator.SceneConfigs.FloatFromBottom;} } />
     );
   }
 
@@ -75,7 +74,7 @@ class App extends Component {
       <LoadingContainer
         onLoadStartAsync={this._loadInitialDataAsync}
         onReadyAsync={this._onReadyAsync}>
-        {this.renderNavigator()}
+        {this.renderRouter()}
       </LoadingContainer>
     )
   }

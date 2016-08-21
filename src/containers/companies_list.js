@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectCompany } from '../actions/index';
@@ -18,16 +19,11 @@ class CompaniesList extends Component {
     super(props);
 
     this.renderRow = this.renderRow.bind(this);
-    this.showCompany = this.showCompany.bind(this);
-  }
-
-  showCompany(company) {
-    this.props.navigator.push({ name: 'companiesShow', data: company });
   }
 
   renderRow(company) {
     return(
-      <TouchableHighlight onPress={() => this.showCompany(company)}>
+      <TouchableHighlight onPress={Actions.companiesShow}>
         <View style={styles.row}>
           <Text style={styles.text}>{company.name}</Text>
           <Text style={styles.text}>{company.price}</Text>
