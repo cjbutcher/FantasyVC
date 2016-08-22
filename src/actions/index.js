@@ -8,6 +8,23 @@ function selectCompany(company) {
   };
 }
 
+function updateCompanies(companies) {
+  return {
+    type: 'COMPANIES_LOADED',
+    payload: companies
+  };
+}
+
+function fetchCompanies() {
+  var companies = Backend.priceIndex().then((index) => {
+    return index;
+  });
+  return {
+    type: 'COMPANIES_LOADED',
+    payload: companies
+  };
+}
+
 function loadCurrentUser() {
   var currentUser = User.currentUser();
   return {
@@ -28,4 +45,4 @@ function createGuestUser() {
   };
 }
 
-export { selectCompany, loadCurrentUser, createGuestUser }
+export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies }

@@ -62,10 +62,6 @@ class App extends Component {
           <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
         </Scene>
       </RouterWithRedux>
-      // <Navigator style={styles.container}
-      //            initialRoute={this.state.initialRoute}
-      //            renderScene={this.renderScene}
-      //            configureScene={ () => {return Navigator.SceneConfigs.FloatFromBottom;} } />
     );
   }
 

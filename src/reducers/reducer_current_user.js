@@ -4,5 +4,5 @@ export default function(state = null, action) {
     return action.payload;
   }
 
-  return null;
+  return state;
 }

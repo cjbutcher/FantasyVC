@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "15.2.1",
     "react-native": "0.31.0",
+    "react-native-actioncable": "0.0.2",
     "react-native-loading-container": "^0.4.0",
     "react-native-router-flux": "^3.35.0",
     "react-redux": "^4.4.5",
