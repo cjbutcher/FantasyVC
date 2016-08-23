@@ -41,9 +41,10 @@ class CompaniesList extends Component {
   }
 
   renderRow(company) {
-    var pos_in_array = this.props.companies.findIndex(x => x == company)
+    var pos_in_array = this.props.companies.findIndex(x => x == company);
+    const renderCompany = () => Actions.companiesShow({pos_in_array: pos_in_array});
     return(
-      <TouchableHighlight onPress={Actions.companiesShow}>
+      <TouchableHighlight onPress={renderCompany}>
         <View style={styles.row}>
           <Text style={styles.text}>{pos_in_array}</Text>
           <Text style={styles.text}>{company.name}</Text>
@@ -100,7 +101,8 @@ function mapDispatchToProps(dispatch) {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingTop: 64
   },
   row: {
     flexDirection: 'row',

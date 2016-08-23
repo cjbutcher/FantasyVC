@@ -3,12 +3,11 @@ import React, {
 } from 'react';
 import {
   View,
+  Text,
   StyleSheet
 } from 'react-native';
 
-var CompaniesList = require('../containers/companies_list').default;
-
-module.exports = class CompaniesIndex extends Component {
+module.exports = class Dummy extends Component {
   constructor() {
     super();
   }
@@ -16,7 +15,7 @@ module.exports = class CompaniesIndex extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <CompaniesList />
+        <Text>'This is a dummy page'</Text>
       </View>
     )
   }

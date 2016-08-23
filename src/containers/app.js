@@ -2,21 +2,32 @@ import React, {
   Component
 } from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  Text
 } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, TabBar } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import LoadingContainer from 'react-native-loading-container';
 
 var CompaniesIndex = require('../components/companies_index');
-var CompaniesShow = require('../components/companies_show');
+var CompaniesShow = require('../containers/companies_show').default;
 var Welcome = require('./welcome').default;
+
+var Dummy = require('../components/dummy');
 
 const RouterWithRedux = connect()(Router);
 
 import { loadCurrentUser } from '../actions/index';
+
+class TabIcon extends React.Component {
+  render(){
+    return (
+      <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+    );
+  }
+}
 
 class App extends Component {
   constructor(props) {
@@ -35,7 +46,7 @@ class App extends Component {
     await this.props.loadCurrentUser();
     if (this.props.currentUser) {
       console.log('the current user is: ', this.props.currentUser);
-      route = 'companiesIndex'
+      route = 'index'
     } else {
       route = 'welcome'
     }
@@ -58,8 +69,11 @@ class App extends Component {
       <RouterWithRedux>
         <Scene key="root">
           <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
-          <Scene key="companiesIndex" component={CompaniesIndex} title="Companies#Index" initial={this.state.initialRoute == 'companiesIndex'} />
-          <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
+          <Scene key="index" initial={this.state.initialRoute == 'index'} tabs={true} >
+            <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
+            <Scene key="tab4" component={Dummy} title="Tab #4" icon={TabIcon}/>
+          </Scene>
+          <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" icon={TabIcon}/>
         </Scene>
       </RouterWithRedux>
     );
