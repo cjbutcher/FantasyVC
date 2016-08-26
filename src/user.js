@@ -10,4 +10,8 @@ function setCurrentUser(user) {
   return AsyncStorage.setItem('currentUser', JSON.stringify(user));
 }
 
-export { currentUser, setCurrentUser }
+function signOutUser() {
+  return AsyncStorage.removeItem('currentUser');
+}
+
+export { currentUser, setCurrentUser, signOutUser }

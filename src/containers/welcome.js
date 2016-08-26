@@ -22,7 +22,7 @@ class Welcome extends Component {
 
   continueAsGuest() {
     this.props.createGuestUser().then(() => {
-      return Actions.companiesIndex();
+      return Actions.index();
     });
   }
 

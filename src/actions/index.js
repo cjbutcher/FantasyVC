@@ -45,4 +45,15 @@ function createGuestUser() {
   };
 }
 
-export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies }
+function signOutUser() {
+  var signout = User.signOutUser().then(() => {
+    return null
+  });
+  return {
+    type: 'USER_LOADED',
+    payload: signout
+  };
+}
+
+
+export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser }

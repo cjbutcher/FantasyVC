@@ -14,6 +14,7 @@ import LoadingContainer from 'react-native-loading-container';
 var CompaniesIndex = require('../components/companies_index');
 var CompaniesShow = require('../containers/companies_show').default;
 var Welcome = require('./welcome').default;
+var Account = require('./account').default;
 
 var Dummy = require('../components/dummy');
 
@@ -71,7 +72,7 @@ class App extends Component {
           <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
           <Scene key="index" initial={this.state.initialRoute == 'index'} tabs={true} >
             <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
-            <Scene key="tab4" component={Dummy} title="Tab #4" icon={TabIcon}/>
+            <Scene key="account" component={Account} title="Account" icon={TabIcon}/>
           </Scene>
           <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" icon={TabIcon}/>
         </Scene>

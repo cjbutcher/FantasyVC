@@ -18,14 +18,14 @@ class CompaniesShow extends Component {
     }
   }
 
-   render() {
-     return (
-       <View style={styles.container}>
+  render() {
+    return (
+      <View style={styles.container}>
         <Text style={styles.text}>{this.props.companies[this.state.current_company].name}</Text>
         <Text style={styles.text}>{this.props.companies[this.state.current_company].price}</Text>
-       </View>
-     )
-   }
+      </View>
+    )
+  }
 }
 
 function mapStateToProps(state) {
