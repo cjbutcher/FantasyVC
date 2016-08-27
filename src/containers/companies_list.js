@@ -51,12 +51,16 @@ class CompaniesList extends Component {
     return(
       <TouchableHighlight onPress={() => this.renderCompany(pos_in_array)}>
         <View style={styles.row}>
-          <Text style={styles.text}>{pos_in_array}</Text>
           <Text style={styles.text}>{company.name}</Text>
           <Text style={styles.text}>{company.price}</Text>
+          <Text style={styles.text}>{this.sharesOwned(company.id)}</Text>
         </View>
       </TouchableHighlight>
     );
+  }
+
+  sharesOwned(companyID) {
+    return this.props.currentUser.portfolio[companyID]
   }
 
   renderList() {
@@ -96,7 +100,8 @@ class CompaniesList extends Component {
 
 function mapStateToProps(state) {
   return {
-    companies: state.companies
+    companies: state.companies,
+    currentUser: state.currentUser
   };
 }
 

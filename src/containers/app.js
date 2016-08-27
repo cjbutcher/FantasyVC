@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 import {
+  View,
   StyleSheet,
   Text
 } from 'react-native';
@@ -13,11 +14,11 @@ import LoadingContainer from 'react-native-loading-container';
 
 var CompaniesIndex = require('../components/companies_index');
 var CompaniesShow = require('../containers/companies_show').default;
-var CompaniesBuy = require('../components/companies_buy');
+var CompaniesBuy = require('../containers/companies_buy').default;
 var Welcome = require('./welcome').default;
 var Account = require('./account').default;
 
-var Dummy = require('../components/dummy');
+var UserBar = require('../containers/user_bar').default;
 
 const RouterWithRedux = connect()(Router);
 
@@ -68,17 +69,24 @@ class App extends Component {
       return;
     }
     return (
-      <RouterWithRedux>
-        <Scene key="root">
-          <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
-          <Scene key="index" initial={this.state.initialRoute == 'index'} tabs={true} >
-            <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
-            <Scene key="account" component={Account} title="Account" icon={TabIcon}/>
-          </Scene>
-          <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
-          <Scene key="companiesBuy" component={CompaniesBuy} title="Companies#Buy" />
-        </Scene>
-      </RouterWithRedux>
+      <View style={styles.container}>
+        <View style={styles.scenes}>
+          <RouterWithRedux>
+            <Scene key="root">
+              <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
+              <Scene key="index" initial={this.state.initialRoute == 'index'} tabs={true} >
+                <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
+                <Scene key="account" component={Account} title="Account" icon={TabIcon}/>
+              </Scene>
+              <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
+              <Scene key="companiesBuy" component={CompaniesBuy} title="Companies#Buy" />
+            </Scene>
+          </RouterWithRedux>
+        </View>
+        <View style={styles.userBar}>
+          <UserBar />
+        </View>
+      </View>
     );
   }
 
@@ -107,6 +115,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 var styles = StyleSheet.create({
   container: {
+    flex: 10
+  },
+  scenes: {
+    flex: 9
+  },
+  userBar: {
     flex: 1
   }
 })

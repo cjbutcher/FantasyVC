@@ -14,7 +14,7 @@ import { bindActionCreators } from 'redux';
 import { purchase } from '../actions/index';
 
 
-class TransactionSlider extends Component {
+class CompaniesBuy extends Component {
 
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ class TransactionSlider extends Component {
 
   purchase() {
     this.props.purchase(this.props.currentUser, this.currentCompany(), this.state.numberOfShares).then(() => {
-      Actions.index();
+      Actions.pop({popNum: 2});
     });
   }
 
@@ -89,4 +89,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionSlider);
+export default connect(mapStateToProps, mapDispatchToProps)(CompaniesBuy);

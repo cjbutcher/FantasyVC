@@ -23,7 +23,6 @@ module.exports = class Dummy extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 64
+    flex: 1
   }
 })
