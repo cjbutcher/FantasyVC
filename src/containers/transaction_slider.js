@@ -6,11 +6,10 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
-import { Actions } from 'react-native-router-flux';
 var Button = require('../components/common/button');
 import { connect } from 'react-redux';
 
-class CompaniesShow extends Component {
+class TransactionSlider extends Component {
 
   constructor(props) {
     super(props);
@@ -19,9 +18,8 @@ class CompaniesShow extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.text}>'This is the transaction slider page'</Text>
         <Text style={styles.text}>{this.props.companies[this.props.currentCompany].name}</Text>
-        <Text style={styles.text}>{this.props.companies[this.props.currentCompany].price}</Text>
-        <Button text='Buy' onPress={Actions.companiesBuy} />
       </View>
     )
   }
@@ -45,4 +43,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, null)(CompaniesShow);
+export default connect(mapStateToProps, null)(TransactionSlider);

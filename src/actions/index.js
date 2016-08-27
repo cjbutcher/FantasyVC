@@ -1,13 +1,6 @@
 var User = require('../user');
 var Backend = require('../backend');
 
-function selectCompany(company) {
-  return {
-    type: 'COMPANY_SELECTED',
-    payload: company
-  };
-}
-
 function updateCompanies(companies) {
   return {
     type: 'COMPANIES_LOADED',
@@ -52,6 +45,13 @@ function signOutUser() {
   return {
     type: 'USER_LOADED',
     payload: signout
+  };
+}
+
+function selectCompany(pos_in_array) {
+  return {
+    type: 'COMPANY_SELECTED',
+    payload: pos_in_array
   };
 }
 

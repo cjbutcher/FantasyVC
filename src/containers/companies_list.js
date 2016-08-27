@@ -11,11 +11,11 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchCompanies, updateCompanies } from '../actions/index';
+import { fetchCompanies, updateCompanies, selectCompany } from '../actions/index';
 import ActionCable from 'react-native-actioncable'
 import LoadingContainer from 'react-native-loading-container';
 
-const cable = ActionCable.createConsumer('ws://b07ebd11.ngrok.io/cable')
+const cable = ActionCable.createConsumer('ws://216bb1ff.ngrok.io/cable')
 
 class CompaniesList extends Component {
 
@@ -26,6 +26,7 @@ class CompaniesList extends Component {
     }
 
     this.renderRow = this.renderRow.bind(this);
+    this.renderCompany = this.renderCompany.bind(this);
 
     this._loadInitialDataAsync = this._loadInitialDataAsync.bind(this);
     this._onReadyAsync = this._onReadyAsync.bind(this);
@@ -40,11 +41,15 @@ class CompaniesList extends Component {
     });
   }
 
+  renderCompany(pos_in_array) {
+    this.props.selectCompany(pos_in_array);
+    Actions.companiesShow();
+  }
+
   renderRow(company) {
     var pos_in_array = this.props.companies.findIndex(x => x == company);
-    const renderCompany = () => Actions.companiesShow({pos_in_array: pos_in_array});
     return(
-      <TouchableHighlight onPress={renderCompany}>
+      <TouchableHighlight onPress={() => this.renderCompany(pos_in_array)}>
         <View style={styles.row}>
           <Text style={styles.text}>{pos_in_array}</Text>
           <Text style={styles.text}>{company.name}</Text>
@@ -96,7 +101,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchCompanies, updateCompanies }, dispatch);
+  return bindActionCreators({ fetchCompanies, updateCompanies, selectCompany }, dispatch);
 }
 
 var styles = StyleSheet.create({
