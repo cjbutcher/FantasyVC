@@ -8,7 +8,11 @@ import {
   StyleSheet
 } from 'react-native'
 var Button = require('../components/common/button');
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { purchase } from '../actions/index';
+
 
 class TransactionSlider extends Component {
 
@@ -17,6 +21,7 @@ class TransactionSlider extends Component {
     this.state = {
       numberOfShares: 0
     }
+    this.purchase = this.purchase.bind(this);
   }
 
   render() {
@@ -30,8 +35,15 @@ class TransactionSlider extends Component {
         <Text>{'Number of shares: ' + this.state.numberOfShares}</Text>
         <Text>{'Percentage of cash: ' + this.percentageOfCash()}</Text>
         <Text>{'Cost: ' + this.cost()}</Text>
+        <Button text={'Buy!'} onPress={this.purchase} />
       </View>
     )
+  }
+
+  purchase() {
+    this.props.purchase(this.props.currentUser, this.currentCompany(), this.state.numberOfShares).then(() => {
+      Actions.index();
+    });
   }
 
   currentCompany() {
@@ -61,6 +73,11 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ purchase }, dispatch);
+}
+
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -72,4 +89,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, null)(TransactionSlider);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionSlider);

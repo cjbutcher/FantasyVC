@@ -55,5 +55,20 @@ function selectCompany(pos_in_array) {
   };
 }
 
+function purchase(currentUser, currentCompany, numberOfShares) {
+  var user = Backend.buy(currentUser, currentCompany, numberOfShares).then((user) => {
+    console.log('user is ' + JSON.stringify(user));
+    return User.setCurrentUser(user).then(() => {
+      return User.currentUser().then((user) => {
+        return user
+      });
+    });
+  });
+  return {
+    type: 'USER_LOADED',
+    payload: user
+  }
+}
 
-export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser }
+
+export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser, purchase }
