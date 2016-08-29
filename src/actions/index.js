@@ -29,7 +29,9 @@ function loadCurrentUser() {
 function createGuestUser() {
   var new_user = Backend.createUser().then((user) => {
     return User.setCurrentUser(user).then(() => {
-      return user
+      return User.currentUser().then((user) => {
+        return user
+      });
     });
   });
   return {
@@ -55,9 +57,29 @@ function selectCompany(pos_in_array) {
   };
 }
 
+function selectPurchase(purchase) {
+  return {
+    type: 'PURCHASE_SELECTED',
+    payload: purchase
+  };
+}
+
 function purchase(currentUser, currentCompany, numberOfShares) {
   var user = Backend.buy(currentUser, currentCompany, numberOfShares).then((user) => {
-    console.log('user is ' + JSON.stringify(user));
+    return User.setCurrentUser(user).then(() => {
+      return User.currentUser().then((user) => {
+        return user
+      });
+    });
+  });
+  return {
+    type: 'USER_LOADED',
+    payload: user
+  }
+}
+
+function sell(currentUser, currentPurchase, currentCompany, numberOfShares) {
+  var user = Backend.sell(currentUser, currentPurchase, currentCompany, numberOfShares).then((user) => {
     return User.setCurrentUser(user).then(() => {
       return User.currentUser().then((user) => {
         return user
@@ -71,4 +93,4 @@ function purchase(currentUser, currentCompany, numberOfShares) {
 }
 
 
-export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser, purchase }
+export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser, purchase, sell, selectPurchase }

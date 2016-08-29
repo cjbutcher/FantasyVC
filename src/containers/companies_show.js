@@ -22,6 +22,7 @@ class CompaniesShow extends Component {
         <Text style={styles.text}>{this.props.companies[this.props.currentCompany].name}</Text>
         <Text style={styles.text}>{this.props.companies[this.props.currentCompany].price}</Text>
         <Button text='Buy' onPress={Actions.companiesBuy} />
+        <Button text='Sell' onPress={Actions.companyPurchases} />
       </View>
     )
   }

@@ -14,17 +14,14 @@ import { bindActionCreators } from 'redux';
 import { fetchCompanies, updateCompanies, selectCompany } from '../actions/index';
 import ActionCable from 'react-native-actioncable'
 import LoadingContainer from 'react-native-loading-container';
+var Portfolio = require('../portfolio');
 
-const cable = ActionCable.createConsumer('ws://216bb1ff.ngrok.io/cable')
+const cable = ActionCable.createConsumer('ws://82c91f4d.ngrok.io/cable')
 
 class CompaniesList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      message: null
-    }
-
     this.renderRow = this.renderRow.bind(this);
     this.renderCompany = this.renderCompany.bind(this);
 
@@ -53,14 +50,18 @@ class CompaniesList extends Component {
         <View style={styles.row}>
           <Text style={styles.text}>{company.name}</Text>
           <Text style={styles.text}>{company.price}</Text>
-          <Text style={styles.text}>{this.sharesOwned(company.id)}</Text>
+          <Text style={styles.text}>{this.formatChange(company.change)}</Text>
+          <Text style={styles.text}>{Portfolio.sharesOwned(this.props.currentUser, company.id)}</Text>
         </View>
       </TouchableHighlight>
     );
   }
 
-  sharesOwned(companyID) {
-    return this.props.currentUser.portfolio[companyID]
+  formatChange(change) {
+    if (!change.startsWith("-")) {
+      change = ('+' + change)
+    }
+    return change
   }
 
   renderList() {

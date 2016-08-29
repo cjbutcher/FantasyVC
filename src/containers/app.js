@@ -15,6 +15,8 @@ import LoadingContainer from 'react-native-loading-container';
 var CompaniesIndex = require('../components/companies_index');
 var CompaniesShow = require('../containers/companies_show').default;
 var CompaniesBuy = require('../containers/companies_buy').default;
+var CompanyPurchases = require('../containers/company_purchases').default;
+var PurchasesSell = require('../containers/purchases_sell').default;
 var Welcome = require('./welcome').default;
 var Account = require('./account').default;
 
@@ -48,7 +50,7 @@ class App extends Component {
     var route;
     await this.props.loadCurrentUser();
     if (this.props.currentUser) {
-      console.log('the current user is: ', this.props.currentUser);
+      console.log('the current user is: ', this.props.currentUser.portfolio);
       route = 'index'
     } else {
       route = 'welcome'
@@ -74,12 +76,14 @@ class App extends Component {
           <RouterWithRedux>
             <Scene key="root">
               <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
-              <Scene key="index" initial={this.state.initialRoute == 'index'} tabs={true} >
+              <Scene key="index" type="replace" initial={this.state.initialRoute == 'index'} tabs={true} >
                 <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
                 <Scene key="account" component={Account} title="Account" icon={TabIcon}/>
               </Scene>
               <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />
               <Scene key="companiesBuy" component={CompaniesBuy} title="Companies#Buy" />
+              <Scene key="companyPurchases" component={CompanyPurchases} title="Company#Purchases" />
+              <Scene key="purchasesSell" component={PurchasesSell} title="Purchases#Sell" />
             </Scene>
           </RouterWithRedux>
         </View>

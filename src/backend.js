@@ -1,4 +1,4 @@
-const baseURL = 'https://216bb1ff.ngrok.io'
+const baseURL = 'https://82c91f4d.ngrok.io'
 
 function get(params) {
   url = baseURL + params
@@ -37,8 +37,10 @@ function createUser() {
 
 function buy(user, company, amount) {
   return post('/purchases', JSON.stringify({
+    'user': {
+      'token': user.token
+    },
     'purchase': {
-      'user_id': user.id,
       'company_id': company.id,
       'amount': amount,
       'price': company.price
@@ -46,11 +48,15 @@ function buy(user, company, amount) {
   }));
 }
 
-function sell(user, company, amount) {
+function sell(user, purchase, company, amount) {
   return post('/sales', JSON.stringify({
+    'user': {
+      'token': user.token
+    },
+    'purchase': {
+      'id': purchase.id
+    },
     'sale': {
-      'user_id': user.id,
-      'company_id': company.id,
       'amount': amount,
       'price': company.price
     }

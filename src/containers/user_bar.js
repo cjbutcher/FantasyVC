@@ -15,6 +15,11 @@ class UserBar extends Component {
   }
 
   render() {
+    if (!this.props.currentUser) {
+      return (
+        <Text style={styles.text}>{'Not signed in'}</Text>
+      )
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.text}>{this.props.currentUser.username}</Text>

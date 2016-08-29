@@ -11,17 +11,16 @@ var Button = require('../components/common/button');
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { purchase } from '../actions/index';
+import { sell } from '../actions/index';
 
-
-class CompaniesBuy extends Component {
+class PurchasesSell extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       numberOfShares: 0
     }
-    this.purchase = this.purchase.bind(this);
+    this.sell = this.sell.bind(this);
   }
 
   render() {
@@ -29,51 +28,49 @@ class CompaniesBuy extends Component {
       <View style={styles.container}>
         <Text style={styles.text}>{this.currentCompany().name}</Text>
         <Slider
-          maximumValue={this.maxNumberOfShares()}
+          maximumValue={this.props.currentPurchase.remaining}
           step={1}
           onValueChange={(numberOfShares) => this.setState({numberOfShares: numberOfShares})} />
         <Text>{'Number of shares: ' + this.state.numberOfShares}</Text>
-        <Text>{'Percentage of cash: ' + this.percentageOfCash()}</Text>
-        <Text>{'Cost: ' + this.cost()}</Text>
-        <Button text={'Buy!'} onPress={this.purchase} />
+        <Text>{'Revenue: ' + this.revenue()}</Text>
+        <Text>{'Profit/Loss: ' + this.profit()}</Text>
+        <Button text={'Sell!'} onPress={this.sell} />
       </View>
     )
   }
 
-  purchase() {
+  revenue() {
+    return (this.currentCompany().price * this.state.numberOfShares)
+  }
+
+  sell() {
     Actions.index({type: "reset"});
-    this.props.purchase(this.props.currentUser, this.currentCompany(), this.state.numberOfShares);
+    this.props.sell(this.props.currentUser, this.props.currentPurchase, this.currentCompany(), this.state.numberOfShares);
   }
 
   currentCompany() {
     return this.props.companies[this.props.currentCompany]
   }
 
-  cost() {
-    return (this.state.numberOfShares * this.currentCompany().price)
+  profit() {
+    var total_cost = (this.props.currentPurchase.price * this.state.numberOfShares)
+    var total_revenue = (this.currentCompany().price *  this.state.numberOfShares)
+    return total_revenue - total_cost
   }
 
-  percentageOfCash() {
-    return (this.cost() / this.props.currentUser.cash) * 100
-  }
-
-  maxNumberOfShares() {
-    cash = this.props.currentUser.cash
-    price_per_share = this.currentCompany().price;
-    return (cash / price_per_share)
-  }
 }
 
 function mapStateToProps(state) {
   return {
     companies: state.companies,
     currentCompany: state.currentCompany,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    currentPurchase: state.currentPurchase
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ purchase }, dispatch);
+  return bindActionCreators({ sell }, dispatch);
 }
 
 
@@ -88,4 +85,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompaniesBuy);
+export default connect(mapStateToProps, mapDispatchToProps)(PurchasesSell);
