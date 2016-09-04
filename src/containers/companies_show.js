@@ -19,8 +19,8 @@ class CompaniesShow extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.companies[this.props.currentCompany].name}</Text>
-        <Text style={styles.text}>{this.props.companies[this.props.currentCompany].price}</Text>
+        <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].name}</Text>
+        <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].price}</Text>
         <Button text='Buy' onPress={Actions.companiesBuy} />
         <Button text='Sell' onPress={Actions.companyPurchases} />
       </View>
@@ -30,7 +30,7 @@ class CompaniesShow extends Component {
 
 function mapStateToProps(state) {
   return {
-    companies: state.companies,
+    market: state.market,
     currentCompany: state.currentCompany
   };
 }

@@ -46,7 +46,7 @@ class CompanyPurchases extends Component {
   }
 
   currentCompany() {
-    return this.props.companies[this.props.currentCompany]
+    return this.props.market.companies[this.props.currentCompany]
   }
 
   render() {
@@ -65,7 +65,7 @@ class CompanyPurchases extends Component {
 
 function mapStateToProps(state) {
   return {
-    companies: state.companies,
+    market: state.market,
     currentUser: state.currentUser,
     currentCompany: state.currentCompany
   };

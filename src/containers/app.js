@@ -19,6 +19,7 @@ var CompanyPurchases = require('../containers/company_purchases').default;
 var PurchasesSell = require('../containers/purchases_sell').default;
 var Welcome = require('./welcome').default;
 var Account = require('./account').default;
+var News = require('../containers/news').default;
 
 var UserBar = require('../containers/user_bar').default;
 
@@ -29,7 +30,7 @@ import { loadCurrentUser } from '../actions/index';
 class TabIcon extends React.Component {
   render(){
     return (
-      <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+      <Text style={{color: this.props.selected ? '#77DDFF' : 'white'}}>{this.props.title}</Text>
     );
   }
 }
@@ -50,7 +51,6 @@ class App extends Component {
     var route;
     await this.props.loadCurrentUser();
     if (this.props.currentUser) {
-      console.log('the current user is: ', this.props.currentUser.portfolio);
       route = 'index'
     } else {
       route = 'welcome'
@@ -78,6 +78,7 @@ class App extends Component {
               <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
               <Scene key="index" type="replace" initial={this.state.initialRoute == 'index'} tabs={true} >
                 <Scene key="companiesIndex" component={CompaniesIndex} title="Market" icon={TabIcon}/>
+                <Scene key="news" component={News} title="News" icon={TabIcon}/>
                 <Scene key="account" component={Account} title="Account" icon={TabIcon}/>
               </Scene>
               <Scene key="companiesShow" component={CompaniesShow} title="Companies#Show" />

@@ -49,7 +49,7 @@ class PurchasesSell extends Component {
   }
 
   currentCompany() {
-    return this.props.companies[this.props.currentCompany]
+    return this.props.market.companies[this.props.currentCompany]
   }
 
   profit() {
@@ -62,7 +62,7 @@ class PurchasesSell extends Component {
 
 function mapStateToProps(state) {
   return {
-    companies: state.companies,
+    market: state.market,
     currentCompany: state.currentCompany,
     currentUser: state.currentUser,
     currentPurchase: state.currentPurchase

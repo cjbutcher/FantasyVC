@@ -1,8 +1,8 @@
 export default function(state = [], action) {
   switch(action.type) {
-  case 'COMPANIES_LOADED':
+  case 'MARKET_LOADED':
     return action.payload;
   }
-  
+
   return state;
 }

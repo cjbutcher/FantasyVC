@@ -1,20 +1,20 @@
 var User = require('../user');
 var Backend = require('../backend');
 
-function updateCompanies(companies) {
+function updateMarket(companies) {
   return {
-    type: 'COMPANIES_LOADED',
+    type: 'MARKET_LOADED',
     payload: companies
   };
 }
 
-function fetchCompanies() {
-  var companies = Backend.priceIndex().then((index) => {
+function fetchMarket() {
+  var market = Backend.priceIndex().then((index) => {
     return index;
   });
   return {
-    type: 'COMPANIES_LOADED',
-    payload: companies
+    type: 'MARKET_LOADED',
+    payload: market
   };
 }
 
@@ -93,4 +93,4 @@ function sell(currentUser, currentPurchase, currentCompany, numberOfShares) {
 }
 
 
-export { selectCompany, loadCurrentUser, createGuestUser, updateCompanies, fetchCompanies, signOutUser, purchase, sell, selectPurchase }
+export { selectCompany, loadCurrentUser, createGuestUser, updateMarket, fetchMarket, signOutUser, purchase, sell, selectPurchase }
