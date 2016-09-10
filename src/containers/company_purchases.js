@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import {
   View,
-  StyleSheet,
   ListView,
   TouchableHighlight,
   Text
@@ -12,6 +11,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectPurchase } from '../actions/index';
+var styles = require('../styles/main').styles();
 
 class CompanyPurchases extends Component {
 
@@ -74,21 +74,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ selectPurchase }, dispatch);
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: '#F6F6F6'
-  },
-  text: {
-    flex: 1
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyPurchases);

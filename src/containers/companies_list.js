@@ -2,8 +2,8 @@ import React, {
   Component
 } from 'react';
 import {
+  Image,
   View,
-  StyleSheet,
   ListView,
   TouchableHighlight,
   Text
@@ -15,6 +15,7 @@ import { fetchMarket, updateMarket, selectCompany } from '../actions/index';
 import ActionCable from 'react-native-actioncable'
 import LoadingContainer from 'react-native-loading-container';
 import { sharesOwned } from '../portfolio';
+var styles = require('../styles/main').styles();
 
 const cable = ActionCable.createConsumer('ws://82c91f4d.ngrok.io/cable')
 
@@ -48,13 +49,21 @@ class CompaniesList extends Component {
     return(
       <TouchableHighlight onPress={() => this.renderCompany(pos_in_array)}>
         <View style={styles.row}>
+          <Image source={{uri: (company.logo ? company.logo : 'http://i.imgbox.com/BZQ7ogZX.png')}} style={styles.smallLogo}/>
           <Text style={styles.text}>{company.name}</Text>
           <Text style={styles.text}>{company.price}</Text>
-          <Text style={styles.text}>{this.formatChange(company.change)}</Text>
+          <Text style={this.selectColor(company.change)}>{this.formatChange(company.change)}</Text>
           <Text style={styles.text}>{sharesOwned(this.props.currentUser, company.id)}</Text>
         </View>
       </TouchableHighlight>
     );
+  }
+
+  selectColor(change) {
+    if (!change.startsWith("-")) {
+      return [styles.text, styles.greenText];
+    }
+    return [styles.text, styles.redText];
   }
 
   formatChange(change) {
@@ -109,25 +118,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchMarket, updateMarket, selectCompany }, dispatch);
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64,
-    backgroundColor: 'black'
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: 'black',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.2)'
-  },
-  text: {
-    color: 'white',
-    flex: 1
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompaniesList);

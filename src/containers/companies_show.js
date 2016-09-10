@@ -3,12 +3,12 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 var Button = require('../components/common/button');
 import { connect } from 'react-redux';
+var styles = require('../styles/main').styles();
 
 class CompaniesShow extends Component {
 
@@ -19,10 +19,14 @@ class CompaniesShow extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].name}</Text>
-        <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].price}</Text>
-        <Button text='Buy' onPress={Actions.companiesBuy} />
-        <Button text='Sell' onPress={Actions.companyPurchases} />
+        <View style={styles.containerWithGroupedButtons}>
+          <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].name}</Text>
+          <Text style={styles.text}>{this.props.market.companies[this.props.currentCompany].price}</Text>
+        </View>
+        <View style={styles.groupedButtonsContainer}>
+          <Button buttonStyle={[styles.button, styles.orangeButton]} buttonTextStyle={styles.buttonText} text='Sell' onPress={Actions.companyPurchases} />
+          <Button buttonStyle={[styles.button, styles.blueButton]} buttonTextStyle={styles.buttonText} text='Buy' onPress={Actions.companiesBuy} />
+        </View>
       </View>
     )
   }
@@ -34,16 +38,5 @@ function mapStateToProps(state) {
     currentCompany: state.currentCompany
   };
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-  }
-});
 
 export default connect(mapStateToProps, null)(CompaniesShow);

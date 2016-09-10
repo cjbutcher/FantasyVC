@@ -4,15 +4,14 @@ import React, {
 import {
   View,
   Slider,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native'
 var Button = require('../components/common/button');
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { purchase } from '../actions/index';
-
+var styles = require('../styles/main').styles();
 
 class CompaniesBuy extends Component {
 
@@ -32,10 +31,10 @@ class CompaniesBuy extends Component {
           maximumValue={this.maxNumberOfShares()}
           step={1}
           onValueChange={(numberOfShares) => this.setState({numberOfShares: numberOfShares})} />
-        <Text>{'Number of shares: ' + this.state.numberOfShares}</Text>
-        <Text>{'Percentage of cash: ' + this.percentageOfCash()}</Text>
-        <Text>{'Cost: ' + this.cost()}</Text>
-        <Button text={'Buy!'} onPress={this.purchase} />
+        <Text style={styles.text}>{'Number of shares: ' + this.state.numberOfShares}</Text>
+        <Text style={styles.text}>{'Percentage of cash: ' + this.percentageOfCash()}</Text>
+        <Text style={styles.text}>{'Cost: ' + this.cost()}</Text>
+        <Button buttonStyle={[styles.button, styles.blueButton]} buttonTextStyle={styles.buttonText} text={'Buy!'} onPress={this.purchase} />
       </View>
     )
   }
@@ -75,17 +74,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ purchase }, dispatch);
 }
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompaniesBuy);

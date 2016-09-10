@@ -4,14 +4,14 @@ import React, {
 import {
   View,
   Slider,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native'
 var Button = require('../components/common/button');
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sell } from '../actions/index';
+var styles = require('../styles/main').styles();
 
 class PurchasesSell extends Component {
 
@@ -34,7 +34,7 @@ class PurchasesSell extends Component {
         <Text>{'Number of shares: ' + this.state.numberOfShares}</Text>
         <Text>{'Revenue: ' + this.revenue()}</Text>
         <Text>{'Profit/Loss: ' + this.profit()}</Text>
-        <Button text={'Sell!'} onPress={this.sell} />
+        <Button buttonStyle={[styles.button, styles.orangeButton]} buttonTextStyle={styles.buttonText} text={'Sell!'} onPress={this.sell} />
       </View>
     )
   }
@@ -72,17 +72,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ sell }, dispatch);
 }
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PurchasesSell);

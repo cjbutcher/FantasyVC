@@ -3,12 +3,12 @@ import React, {
 } from 'react';
 import {
   View,
-  StyleSheet,
   Text
 } from 'react-native';
 import { Router, Scene, TabBar } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+var styles = require('../styles/main').styles();
 
 import LoadingContainer from 'react-native-loading-container';
 
@@ -71,9 +71,9 @@ class App extends Component {
       return;
     }
     return (
-      <View style={styles.container}>
+      <View style={styles.appContainer}>
         <View style={styles.scenes}>
-          <RouterWithRedux>
+          <RouterWithRedux navigationBarStyle={styles.navBar} titleStyle={styles.navBarTitle} barButtonTextStyle={styles.barButtonTextStyle} barButtonIconStyle={styles.barButtonIconStyle}>
             <Scene key="root">
               <Scene key="welcome" component={Welcome} title="Welcome" initial={this.state.initialRoute == 'welcome'} />
               <Scene key="index" type="replace" initial={this.state.initialRoute == 'index'} tabs={true} >
@@ -88,9 +88,7 @@ class App extends Component {
             </Scene>
           </RouterWithRedux>
         </View>
-        <View style={styles.userBar}>
-          <UserBar />
-        </View>
+        <UserBar />
       </View>
     );
   }
@@ -117,15 +115,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 10
-  },
-  scenes: {
-    flex: 9
-  },
-  userBar: {
-    flex: 1
-  }
-})

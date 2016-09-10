@@ -3,10 +3,10 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native'
 import { connect } from 'react-redux';
+var styles = require('../styles/main').styles();
 
 class UserBar extends Component {
 
@@ -21,7 +21,7 @@ class UserBar extends Component {
       )
     }
     return (
-      <View style={styles.container}>
+      <View style={styles.userBar}>
         <Text style={styles.text}>{this.props.currentUser.username}</Text>
         <Text style={styles.text}>{this.props.currentUser.cash}</Text>
       </View>
@@ -39,15 +39,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ purchase }, dispatch);
 }
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  text: {
-    fontSize: 20
-  }
-});
 
 export default connect(mapStateToProps, null)(UserBar);

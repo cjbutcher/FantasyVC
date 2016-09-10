@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import {
   View,
-  StyleSheet,
   ListView,
   TouchableHighlight,
   Text
@@ -13,6 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectCompany } from '../actions/index';
 import { convertIDToIndex, timeSince } from '../market';
+var styles = require('../styles/main').styles();
 
 class News extends Component {
 
@@ -61,21 +61,5 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ selectCompany }, dispatch);
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: '#F6F6F6'
-  },
-  text: {
-    flex: 1
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(News);

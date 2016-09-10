@@ -3,13 +3,13 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
-  StyleSheet
+  Text
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { signOutUser } from '../actions/index';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+var styles = require('../styles/main').styles();
 
 var Button = require('../components/common/button');
 
@@ -29,7 +29,7 @@ class Account extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <Button text={'Sign Out'} onPress={this.signOut} />
+        <Button buttonStyle={[styles.button, styles.blueButton]} buttonTextStyle={styles.buttonText} text={'Sign Out'} onPress={this.signOut} />
       </View>
     )
   }
@@ -46,10 +46,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account);
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 64
-  }
-})
